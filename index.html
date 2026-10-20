@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bar Candela · Vermutería & Tapas</title>
+<meta name="description" content="Vermut de grifo, tapas caseras de las de antes y buen ambiente en Bar Candela. Reserva tu mesa online.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Caveat+Brush&display=swap" rel="stylesheet">
+<style>
+:root{
+  --wall:#1E358B; --grout:rgba(255,255,255,.09);
+  --paper:#F6F4EE; --ink:#14213D; --muted:#4B5A78; --field:#FFFFFF; --line:#D5DCE6;
+  --board:#192420; --chalk:#F5F3EB; --wood:#7C4D2B; --mustard:#F2B830; --accent:#D94E34;
+  --sans:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+  --chalkfont:"Caveat Brush","Segoe Print",cursive;
+  color-scheme:light;
+  box-sizing:border-box; background:var(--wall);
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --wall:#13225C; --grout:rgba(255,255,255,.06);
+    --paper:#0D1322; --ink:#E6ECF5; --muted:#9FB0CC; --field:#162038; --line:#283655;
+    --board:#121A16; --wood:#5E3A20; color-scheme:dark;
+  }
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:4.5rem;scroll-behavior:smooth}
+body{margin:0;font-family:var(--sans);font-size:1.0625rem;line-height:1.55;color:var(--ink);background:var(--paper)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--mustard);outline-offset:3px}
+.wrap{max-width:1100px;margin:0 auto;padding:0 1.25rem}
+
+/* Barra de navegación superior */
+.navbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(30,53,139,.92);backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(255,255,255,.12);color:#fff;padding:.75rem 0;
+}
+.navbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.brand{font-weight:800;font-size:1.35rem;color:var(--mustard);text-decoration:none;letter-spacing:-.02em;display:flex;align-items:center;gap:.5rem}
+.nav-links{display:flex;gap:1.25rem;align-items:center;font-size:.95rem;font-weight:600}
+.nav-links a{text-decoration:none;opacity:.9;transition:opacity .2s}
+.nav-links a:hover{opacity:1;color:var(--mustard)}
+
+/* Pared de azulejo tradicional */
+.wall{
+  background-color:var(--wall);
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,.07), transparent 45%),
+    linear-gradient(var(--grout) 2px,transparent 2px),
+    linear-gradient(90deg,var(--grout) 2px,transparent 2px);
+  background-size:100% 100%, 68px 68px, 68px 68px;
+  color:#fff;
+}
+.hero{padding:3.5rem 0 4.5rem}
+.hero .wrap{display:grid;gap:2.8rem;align-items:center}
+@media (min-width:880px){.hero .wrap{grid-template-columns:1fr 1.08fr;gap:3.5rem}}
+.badge-top{display:inline-block;background:rgba(242,184,48,.18);color:var(--mustard);border:1px solid rgba(242,184,48,.4);padding:.25rem .75rem;border-radius:999px;font-size:.85rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:.9rem}
+h1{margin:0;font-size:clamp(3.4rem,10vw,6.2rem);line-height:.92;font-weight:800;letter-spacing:-.03em;color:var(--mustard);text-shadow:0 4px 18px rgba(0,0,0,.22)}
+.lead{font-size:1.25rem;max-width:34ch;margin:1.2rem 0 1.5rem;color:rgba(255,255,255,.92)}
+.status{display:inline-flex;align-items:center;gap:.6rem;background:rgba(0,0,0,.32);padding:.5rem 1rem;border-radius:999px;font-weight:600;font-size:.95rem;border:1px solid rgba(255,255,255,.1)}
+.dot{width:.7rem;height:.7rem;border-radius:50%;background:#FF6B6B}
+.status.open .dot{background:#5BE08A;box-shadow:0 0 0 4px rgba(91,224,138,.25)}
+.hero-actions{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:1.6rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;background:var(--mustard);color:#192420;font:inherit;font-weight:800;padding:.85rem 1.5rem;border:0;border-radius:8px;text-decoration:none;cursor:pointer;transition:transform .15s,filter .15s;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.btn:hover{filter:brightness(1.06);transform:translateY(-2px)}
+.btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1.5px solid rgba(255,255,255,.25);box-shadow:none}
+.btn-ghost:hover{background:rgba(255,255,255,.2)}
+
+/* Pizarra del bar */
+.board{
+  background:var(--board);color:var(--chalk);border:12px solid var(--wood);border-radius:10px;
+  padding:1.5rem 1.5rem 1.3rem;box-shadow:0 20px 40px rgba(0,0,0,.4), inset 0 0 30px rgba(0,0,0,.35);
+  font-family:var(--chalkfont);animation:rise .6s ease-out both;position:relative;
+}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.board-header{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:.5rem;margin-bottom:.6rem}
+.board h2{margin:0;font-size:2.6rem;font-weight:400;line-height:1;color:var(--mustard)}
+.board-sub{font-family:var(--sans);font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;opacity:.65}
+.tabs{display:flex;gap:1.1rem;margin-bottom:1rem;flex-wrap:wrap;border-bottom:1px dashed rgba(245,243,235,.2);padding-bottom:.4rem}
+.tab{font:inherit;font-size:1.5rem;background:none;border:0;border-bottom:3px solid transparent;color:rgba(245,243,235,.55);padding:.1rem .2rem;cursor:pointer;transition:color .2s}
+.tab:hover{color:var(--chalk)}
+.tab[aria-selected="true"]{color:var(--chalk);border-bottom-color:var(--mustard)}
+.items{list-style:none;margin:0;padding:0;min-height:15.5rem}
+.items li{display:flex;align-items:baseline;gap:.5rem;font-size:1.55rem;line-height:1.85;padding:0 .3rem;border-radius:4px;transition:background .15s}
+.items li:hover{background:rgba(255,255,255,.05)}
+.items .fill{flex:1;border-bottom:2px dotted rgba(245,243,235,.35);transform:translateY(-.3rem)}
+.items .price{color:var(--mustard);font-weight:700}
+.items .star{font-family:var(--sans);font-size:.7rem;background:var(--accent);color:#fff;padding:.1rem .45rem;border-radius:4px;vertical-align:middle;margin-left:.35rem;letter-spacing:.03em;text-transform:uppercase}
+.items.swap{animation:fade .25s ease-out}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.note{margin:.9rem 0 0;font-size:1.25rem;color:rgba(245,243,235,.75);display:flex;justify-content:space-between;align-items:center}
+
+/* Banda de esencias del bar */
+.highlights{background:var(--field);border-bottom:1px solid var(--line);padding:2rem 0}
+.hl-grid{display:grid;gap:1.5rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.hl-card{display:flex;gap:.9rem;align-items:flex-start}
+.hl-icon{font-size:1.8rem;line-height:1}
+.hl-card h3{margin:0 0 .2rem;font-size:1.05rem;font-weight:800}
+.hl-card p{margin:0;font-size:.92rem;color:var(--muted)}
+
+/* Secciones claras */
+section.info{padding:4.5rem 0}
+h2.sec{margin:0 0 1.2rem;font-size:clamp(1.9rem,4.5vw,2.7rem);line-height:1.05;letter-spacing:-.02em;font-weight:800}
+.cols{display:grid;gap:3.5rem}
+@media (min-width:880px){.cols{grid-template-columns:1fr 1.1fr;gap:4.5rem}}
+.card-box{background:var(--field);border:1.5px solid var(--line);border-radius:12px;padding:1.75rem;box-shadow:0 8px 24px rgba(0,0,0,.04)}
+dl.hours{margin:0}
+dl.hours div{display:flex;justify-content:space-between;gap:1rem;padding:.65rem .75rem;border-bottom:1px solid var(--line)}
+dl.hours div:last-child{border-bottom:0}
+dl.hours dt{font-weight:700}
+dl.hours dd{margin:0;color:var(--muted);font-weight:500}
+dl.hours .today{background:var(--wall);color:#fff;border-radius:6px;border-bottom-color:transparent}
+dl.hours .today dd{color:var(--mustard);font-weight:700}
+.where{margin-top:1.4rem;padding-top:1.2rem;border-top:1px dashed var(--line);color:var(--muted);font-size:.96rem}
+.where strong{color:var(--ink)}
+
+form{display:grid;gap:1rem}
+label{display:grid;gap:.35rem;font-weight:700;font-size:.93rem}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:8px;padding:.7rem .85rem;width:100%}
+input:focus,select:focus,textarea:focus{border-color:var(--wall);background:var(--field)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.result{display:none;margin-top:1.25rem;padding:1.2rem;border-left:5px solid var(--wall);background:var(--paper);border-radius:0 8px 8px 0}
+.result.show{display:block}
+.result p{margin:.3rem 0}
+
+footer{padding:3rem 0 3.5rem;font-size:.95rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:1.5rem 3rem;justify-content:space-between;align-items:center}
+footer p{margin:.2rem 0}
+footer .name{font-weight:800;font-size:1.4rem;color:var(--mustard)}
+.link-btn{background:none;border:0;color:inherit;font:inherit;text-decoration:underline;cursor:pointer;padding:0;opacity:.85}
+dialog{border:0;border-radius:12px;padding:1.6rem;background:var(--field);color:var(--ink);width:min(23rem,92vw);box-shadow:0 20px 50px rgba(0,0,0,.4)}
+dialog::backdrop{background:rgba(0,0,0,.6)}
+dialog h2{margin:0 0 1rem;font-size:1.4rem}
+.err{border-left:4px solid #D64545;padding-left:.6rem;margin:.8rem 0;font-weight:600;color:#D64545}
+.err:empty{display:none}
+.ok-msg{border-left:4px solid #2E9E5B;padding-left:.6rem;margin:.8rem 0;font-weight:600;color:#2E9E5B}
+.ok-msg:empty{display:none}
+
+/* Panel Admin */
+.admin{background:var(--field);border-top:6px solid var(--mustard);border-bottom:2px solid var(--line)}
+.admin-head{display:flex;flex-wrap:wrap;gap:1rem;align-items:end;justify-content:space-between;margin-bottom:1rem}
+.admin-head label{max-width:12rem}
+.addform{max-width:none;grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr));align-items:end;margin:1.2rem 0 2rem}
+.res-list{list-style:none;margin:0;padding:0}
+.res{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem;padding:.9rem 0;border-bottom:1px solid var(--line)}
+.res.cancelada{opacity:.5}
+.res small{color:var(--muted)}
+.chip{font-size:.78rem;font-weight:700;padding:.15rem .6rem;border-radius:999px;background:var(--line);color:var(--ink)}
+.res.confirmada .chip{background:#BFE8CC;color:#14391F}
+.res.pendiente .chip{background:var(--mustard);color:#1E2A25}
+.acts{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+.sm{font:inherit;font-size:.88rem;font-weight:600;padding:.45rem .85rem;border:1.5px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink);cursor:pointer}
+.sm:hover{border-color:var(--wall)}
+.editor{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--line);max-width:40rem}
+.editor summary{font-weight:800;cursor:pointer;font-size:1.15rem}
+.editor>*:not(summary){margin-top:1rem}
+.hrow{display:grid;grid-template-columns:8.5rem 1fr 1fr;gap:.6rem;align-items:center;margin:.5rem 0}
+.esec{border:1.5px solid var(--line);border-radius:8px;padding:.8rem 1rem 1rem;margin:0 0 1rem}
+.esec legend{font-weight:700;padding:0 .4rem}
+.irow{display:grid;grid-template-columns:1fr 6rem auto;gap:.5rem;margin-bottom:.5rem}
+.chk{display:flex;gap:.5rem;align-items:center;font-weight:600}
+.chk input{width:auto}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="wrap">
+    <a href="#" class="brand">🍷 Bar Candela</a>
+    <div class="nav-links">
+      <a href="#carta">La Pizarra</a>
+      <a href="#horario">Horario</a>
+      <a href="#reservar">Reservar</a>
+    </div>
+  </div>
+</nav>
+
+<header class="wall hero" id="carta">
+  <div class="wrap">
+    <div>
+      <span class="badge-top">Taberna de barrio · Desde 1984</span>
+      <h1>Bar Candela</h1>
+      <p class="lead">Vermut de grifo bien tirado, tapas caseras de las de antes y mesa para quedarse charlando sin mirar el reloj.</p>
+      <p class="status" id="status" role="status"><span class="dot"></span><span id="statusText">Comprobando horario...</span></p>
+      <div class="hero-actions">
+        <a class="btn" href="#reservar">Reservar una mesa</a>
+        <a class="btn btn-ghost" href="#horario">Ver horarios y dirección</a>
+      </div>
+    </div>
+
+    <div class="board">
+      <div class="board-header">
+        <h2>Hoy en la pizarra</h2>
+        <span class="board-sub">Cocina abierta todo el horario</span>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Secciones de la carta" id="tabs"></div>
+      <ul class="items" id="items" role="tabpanel"></ul>
+      <p class="note">
+        <span>✨ Pregunta en barra por la cazuelita del día.</span>
+        <small>IVA incl.</small>
+      </p>
+    </div>
+  </div>
+</header>
+
+<section class="highlights">
+  <div class="wrap hl-grid">
+    <div class="hl-card">
+      <span class="hl-icon">🛢️</span>
+      <div>
+        <h3>Vermut de barrica</h3>
+        <p>Macerado con botánicos tradicionales, servido con su aceituna y rodaja de naranja.</p>
+      </div>
+    </div>
+    <div class="hl-card">
+      <span class="hl-icon">🍳</span>
+      <div>
+        <h3>Cocina sin atajos</h3>
+        <p>Croquetas boleadas a mano cada mañana y tortilla cuajada al momento.</p>
+      </div>
+    </div>
+    <div class="hl-card">
+      <span class="hl-icon">🪑</span>
+      <div>
+        <h3>Barra libre y 6 mesas</h3>
+        <p>Las mesas se reservan para grupos o cenas; en la barra siempre hacemos hueco.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="info admin" id="admin" hidden="">
+  <div class="wrap">
+    <div class="admin-head">
+      <h2 class="sec" style="margin:0">Panel de Gestión</h2>
+      <div class="acts">
+        <label style="display:flex;align-items:center;gap:.5rem">Día <input type="date" id="aDate"></label>
+        <button class="sm" id="logout" type="button">Cerrar sesión</button>
+      </div>
+    </div>
+    <p id="sum" style="font-weight:700"></p>
+    <form class="addform" id="addForm">
+      <label>Nombre<input id="aNombre" required=""></label>
+      <label>Teléfono<input id="aTel" type="tel"></label>
+      <label>Personas<input id="aPers" type="number" min="1" max="30" value="2" required=""></label>
+      <label>Hora<input id="aHora" type="time" value="21:00" required=""></label>
+      <label>Notas<input id="aNotas" placeholder="Alergias, trona..."></label>
+      <button class="btn" type="submit" style="margin:0">Añadir reserva</button>
+    </form>
+    <p class="err" id="adminMsg" role="alert"></p>
+    <ul class="res-list" id="adminList"></ul>
+
+    <details class="editor" id="editor">
+      <summary>⚙️ Editar carta, horario y datos de contacto</summary>
+      <div id="eMenu"></div>
+      <fieldset class="esec"><legend>Horario semanal</legend><div id="eHours"></div></fieldset>
+      <div class="row">
+        <label>Teléfono / WhatsApp<input id="eTel" inputmode="tel"></label>
+        <label>Correo electrónico<input id="eMail" type="email"></label>
+      </div>
+      <p class="err" id="editMsg" role="alert"></p>
+      <p class="ok-msg" id="editOk" role="status"></p>
+      <div class="acts">
+        <button class="btn" id="publishBtn" type="button" style="margin:0">Guardar y descargar HTML actualizado</button>
+      </div>
+      <p style="color:var(--muted);font-size:.88rem">Los cambios se aplican al instante en este navegador y se descarga el archivo <code>index.html</code> listo para actualizar tu servidor.</p>
+    </details>
+  </div>
+</section>
+
+<section class="info" id="horario">
+  <div class="wrap cols">
+    <div class="card-box">
+      <h2 class="sec">Horario</h2>
+      <dl class="hours" id="hours"></dl>
+      <div class="where">
+        <strong>📍 Calle del Ejemplo, 12.</strong><br>
+        Barra tradicional y seis mesas bajas. Para picar en la barra no hace falta avisar; si quieres asegurar mesa, resérvala aquí al lado.
+      </div>
+    </div>
+
+    <div class="card-box" id="reservar">
+      <h2 class="sec">Reserva tu mesa</h2>
+      <form id="form">
+        <div class="row">
+          <label>Nombre completo
+            <input name="nombre" required="" autocomplete="name" placeholder="Ej. Alessandro Tineo">
+          </label>
+          <label>Teléfono de contacto
+            <input name="tel" type="tel" required="" autocomplete="tel" placeholder="600 000 000">
+          </label>
+        </div>
+        <div class="row">
+          <label>Fecha
+            <input type="date" name="fecha" id="fecha" required="">
+          </label>
+          <label>Personas
+            <select name="personas" id="personas"></select>
+          </label>
+        </div>
+        <div class="row">
+          <label>Hora disponible
+            <select name="hora" id="hora" required=""></select>
+          </label>
+          <label>Nota opcional
+            <input name="nota" placeholder="Ej. Cerca de ventana">
+          </label>
+        </div>
+        <button class="btn" id="submitBtn" type="submit" style="margin-top:.4rem">Confirmar solicitud de mesa</button>
+      </form>
+      <div class="result" id="result" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<footer class="wall">
+  <div class="wrap">
+    <div>
+      <p class="name">Bar Candela</p>
+      <p>Calle del Ejemplo, 12 · Teléfono <span id="fTel">647 685 229</span></p>
+    </div>
+    <div>
+      <p>Contacto directo: <a id="fMail" href="mailto:tineoalessandro9@gmail.com">tineoalessandro9@gmail.com</a></p>
+      <p><button class="link-btn" id="openLogin" type="button">Acceso propietario</button></p>
+    </div>
+    <dialog id="login">
+      <form id="loginForm" style="max-width:none">
+        <h2>Acceso de propietario</h2>
+        <label>Contraseña<input id="pw" type="password" autocomplete="current-password" required=""></label>
+        <p class="err" id="loginMsg" role="alert"></p>
+        <div class="acts">
+          <button class="btn" type="submit" style="margin:0">Entrar</button>
+          <button class="sm" id="cancelLogin" type="button">Cancelar</button>
+        </div>
+      </form>
+    </dialog>
+  </div>
+</footer>
+
+<script type="application/json" id="data">{"menu":{"Para picar":[["Croquetas caseras de jamón ★","6,50 €"],["Patatas bravas con salsa candela ★","6,00 €"],["Boquerones en vinagre","7,00 €"],["Tortilla jugosa al momento (pincho)","3,50 €"],["Tabla de quesos curados","12,00 €"]],"Bocatas":[["Calamares crujientes con alioli ★","7,50 €"],["Lomo adobado con queso fundido","7,00 €"],["Pepito de ternera a la plancha","8,00 €"],["Vegetal asado con hummus casero","6,50 €"]],"Para beber":[["Vermut de grifo casero ★","3,20 €"],["Caña bien tirada","2,20 €"],["Vino de la casa (copa)","2,80 €"],["Cóctel Candela especial","8,00 €"],["Mosto o refresco","2,50 €"]]},"horario":{"0":[12,17],"1":null,"2":[17.5,24],"3":[18,24],"4":[18,24],"5":[12,26],"6":[12,26]},"tel":"647685229","email":"tineoalessandro9@gmail.com"}</script>
+<script>
+(function(){
+  var HEAD0=document.head.innerHTML, BODY0=document.body.innerHTML;
+  var $=function(id){return document.getElementById(id)};
+  var DATA={};
+  try{
+    var savedData=localStorage.getItem("bc_site_data");
+    DATA=savedData ? JSON.parse(savedData) : JSON.parse($("data").textContent)||{};
+  }catch(e){}
+
+  var MENU=DATA.menu||{};
+  var DAYS=["Domingo","Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
+  var SCHED=DATA.horario||{0:[12,17],1:null,2:[17.5,24],3:[18,24],4:[18,24],5:[12,26],6:[12,26]};
+  var TEL=DATA.tel||"647685229";
+  var EMAIL=DATA.email||"tineoalessandro9@gmail.com";
+
+  function renderContact(){
+    $("fTel").textContent=TEL;
+    $("fMail").textContent=EMAIL;
+    $("fMail").href="mailto:"+EMAIL;
+  }
+  renderContact();
+
+  // Renderizado de la Pizarra
+  var tabsEl=$("tabs"), itemsEl=$("items");
+  function renderMenu(){
+    tabsEl.innerHTML="";
+    var names=Object.keys(MENU);
+    function show(name,animate){
+      Array.prototype.forEach.call(tabsEl.children,function(b){b.setAttribute("aria-selected",String(b.textContent===name))});
+      itemsEl.innerHTML="";
+      (MENU[name]||[]).forEach(function(it){
+        var li=document.createElement("li");
+        var rawName=it[0];
+        var isStar=rawName.indexOf("★")!==-1;
+        var cleanName=rawName.replace("★","").trim();
+        li.innerHTML='<span></span><span class="fill"></span><span class="price"></span>';
+        li.children[0].textContent=cleanName;
+        if(isStar){
+          var badge=document.createElement("span");
+          badge.className="star"; badge.textContent="Top";
+          li.children[0].appendChild(badge);
+        }
+        li.children[2].textContent=it[1];
+        itemsEl.appendChild(li);
+      });
+      if(animate){itemsEl.classList.remove("swap");void itemsEl.offsetWidth;itemsEl.classList.add("swap");}
+    }
+    names.forEach(function(n){
+      var b=document.createElement("button");
+      b.className="tab"; b.type="button"; b.setAttribute("role","tab"); b.textContent=n;
+      b.addEventListener("click",function(){show(n,true)});
+      tabsEl.appendChild(b);
+    });
+    if(names.length) show(names[0],false);
+  }
+  renderMenu();
+
+  // Horarios y estado en tiempo real
+  function hh(n){var m=Math.round((n%24)*60),p=function(x){return (x<10?"0":"")+x};return p(Math.floor(m/60))+":"+p(m%60)}
+  function label(d){var s=SCHED[d];return s?hh(s[0])+" a "+hh(s[1]):"Cerrado por descanso"}
+
+  var hoursEl=$("hours"), now=new Date(), today=now.getDay();
+  function renderHours(){
+    hoursEl.innerHTML="";
+    [1,2,3,4,5,6,0].forEach(function(d){
+      var row=document.createElement("div");
+      if(d===today) row.className="today";
+      row.innerHTML="<dt></dt><dd></dd>";
+      row.children[0].textContent=DAYS[d]; row.children[1].textContent=label(d);
+      hoursEl.appendChild(row);
+    });
+  }
+  renderHours();
+
+  function status(){
+    var n=new Date(), d=n.getDay(), h=n.getHours()+n.getMinutes()/60;
+    var prev=SCHED[(d+6)%7], cur=SCHED[d];
+    if(prev && prev[1]>24 && h<prev[1]-24) return {open:true,text:"Abierto ahora · Cerramos a las "+hh(prev[1])};
+    if(cur && h>=cur[0] && h<cur[1]) return {open:true,text:"Abierto ahora · Hasta las "+hh(cur[1])};
+    if(cur && h<cur[0]) return {open:false,text:"Cerrado ahora · Abrimos hoy a las "+hh(cur[0])};
+    for(var i=1;i<=7;i++){
+      var nd=(d+i)%7, s=SCHED[nd];
+      if(s) return {open:false,text:"Cerrado · Abrimos "+(i===1?"mañana":"el "+DAYS[nd].toLowerCase())+" a las "+hh(s[0])};
+    }
+    return {open:false,text:"Cerrado temporalmente"};
+  }
+  var st=status(), stEl=$("status");
+  $("statusText").textContent=st.text;
+  if(st.open) stEl.classList.add("open");
+
+  // Formulario de Reservas con filtro dinámico de horas según el día elegido
+  var pers=$("personas"), hora=$("hora"), fecha=$("fecha"), submitBtn=$("submitBtn");
+  for(var p=1;p<=10;p++){var o=document.createElement("option");o.value=p;o.textContent=p===1?"1 persona":p+" personas";if(p===2)o.selected=true;pers.appendChild(o)}
+  var iso=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10);
+  fecha.min=iso; fecha.value=iso;
+
+  function updateAvailableHours(){
+    hora.innerHTML="";
+    var selDate=new Date(fecha.value+"T12:00:00");
+    var dayIdx=selDate.getDay();
+    var sc=SCHED[dayIdx];
+    if(!sc){
+      var o=document.createElement("option");
+      o.value=""; o.textContent="Cerrado los "+DAYS[dayIdx].toLowerCase()+"s";
+      hora.appendChild(o);
+      hora.disabled=true; submitBtn.disabled=true;
+      return;
+    }
+    hora.disabled=false; submitBtn.disabled=false;
+    var start=Math.ceil(sc[0]*2)/2;
+    var end=Math.min(sc[1]-1, 23.5);
+    for(var t=start; t<=end; t+=0.5){
+      var opt=document.createElement("option");
+      var timeStr=hh(t);
+      opt.value=timeStr; opt.textContent=timeStr+" h";
+      if(timeStr==="21:00"||timeStr==="14:00") opt.selected=true;
+      hora.appendChild(opt);
+    }
+  }
+  fecha.addEventListener("change",updateAvailableHours);
+  updateAvailableHours();
+
+  // Almacenamiento de reservas en navegador + envío directo a WhatsApp / Correo
+  function getStoredRes(){try{return JSON.parse(localStorage.getItem("bc_reservas"))||[]}catch(e){return []}}
+  function saveStoredRes(arr){try{localStorage.setItem("bc_reservas",JSON.stringify(arr))}catch(e){}}
+
+  $("form").addEventListener("submit",function(e){
+    e.preventDefault();
+    var f=e.target, nombre=f.nombre.value.trim(), nota=f.nota.value.trim();
+    var dateText=new Date(f.fecha.value+"T12:00:00").toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"long"});
+    var resumen="Reserva en Bar Candela a nombre de "+nombre+" para "+(f.personas.value==="1"?"1 persona":f.personas.value+" personas")+", el "+dateText+" a las "+f.hora.value+"."+(nota?" Nota: "+nota+".":"");
+    
+    var list=getStoredRes();
+    list.push({id:String(Date.now()),nombre:nombre.slice(0,60),tel:f.tel.value.trim().slice(0,25),personas:+f.personas.value,fecha:f.fecha.value,hora:f.hora.value,notas:nota.slice(0,100),estado:"pendiente",creada:Date.now()});
+    saveStoredRes(list);
+
+    var mail="mailto:"+EMAIL+"?subject="+encodeURIComponent("Reserva de mesa - "+nombre)+"&body="+encodeURIComponent(resumen+"\nTeléfono: "+f.tel.value.trim());
+    var r=$("result");
+    var d=String(TEL).replace(/\D/g,""); if(d.length===9) d="34"+d;
+    var wa="https://wa.me/"+d+"?text="+encodeURIComponent("¡Hola Bar Candela! Quiero reservar mesa:\n"+resumen);
+    
+    r.innerHTML='<p style="font-weight:700"></p><p style="font-size:.92rem;color:var(--muted)"></p><p class="acts" style="margin-top:.8rem"><a class="btn" target="_blank" rel="noopener" style="margin:0"></a><a class="sm" style="text-decoration:none"></a></p>';
+    r.children[0].textContent=resumen;
+    r.children[1].textContent="Elige cómo enviarnos tu solicitud para confirmarte la mesa al instante:";
+    var as=r.querySelectorAll("a");
+    as[0].href=wa; as[0].textContent="📲 Enviar por WhatsApp";
+    as[1].href=mail; as[1].textContent="✉️ Enviar al correo";
+    r.classList.add("show");
+  });
+
+  // Administración portable (PBKDF2)
+  var SALT="f7e388cf91f5d7c722bd83d950f5c605", ITER=200000, HASH="f38ab616b3a59fd0c7f653f6a21016088a8b3f212f9479edec6a38e53b1dc7b4";
+  var lk={n:0,until:0}; try{lk=JSON.parse(localStorage.getItem("bc_lock"))||lk}catch(e){}
+  function saveLock(){try{localStorage.setItem("bc_lock",JSON.stringify(lk))}catch(e){}}
+  var dlg=$("login"), adm=$("admin");
+  var ESTADOS={pendiente:"Pendiente",confirmada:"Confirmada",cancelada:"Cancelada"};
+
+  async function kdf(pw){
+    var k=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveBits"]);
+    var salt=new Uint8Array(SALT.match(/../g).map(function(x){return parseInt(x,16)}));
+    var bits=await crypto.subtle.deriveBits({name:"PBKDF2",hash:"SHA-256",salt:salt,iterations:ITER},k,256);
+    return Array.prototype.map.call(new Uint8Array(bits),function(x){return ("0"+x.toString(16)).slice(-2)}).join("");
+  }
+
+  $("openLogin").addEventListener("click",function(){$("loginMsg").textContent="";$("pw").value="";dlg.showModal();$("pw").focus()});
+  $("cancelLogin").addEventListener("click",function(){dlg.close()});
+  $("loginForm").addEventListener("submit",async function(e){
+    e.preventDefault();
+    var msg=$("loginMsg"); msg.textContent="";
+    var t0=Date.now();
+    if(t0<lk.until){msg.textContent="Demasiados intentos. Espera "+Math.ceil((lk.until-t0)/60000)+" min.";return}
+    var pw=$("pw").value; $("pw").value="";
+    if(await kdf(pw)!==HASH){
+      lk.n++; if(lk.n>=5) lk.until=Date.now()+Math.min(5*Math.pow(2,lk.n-5),60)*60000;
+      saveLock(); msg.textContent=lk.n>=5?"Contraseña incorrecta. Acceso bloqueado temporalmente.":"Contraseña incorrecta."; return;
+    }
+    lk.n=0; lk.until=0; saveLock();
+    dlg.close(); adm.hidden=false;
+    $("aDate").value=iso; adm.scrollIntoView(); draw(); fillEditor();
+  });
+
+  $("logout").addEventListener("click",function(){adm.hidden=true;window.scrollTo(0,0)});
+  $("aDate").addEventListener("change",draw);
+
+  function draw(){
+    var rows=getStoredRes();
+    var day=$("aDate").value, ul=$("adminList");
+    var list=rows.filter(function(r){return r.fecha===day}).sort(function(a,b){return a.hora<b.hora?-1:1});
+    var vivas=list.filter(function(r){return r.estado!=="cancelada"});
+    $("sum").textContent=vivas.length+(vivas.length===1?" reserva activa, ":" reservas activas, ")+vivas.reduce(function(n,r){return n+(+r.personas||0)},0)+" comensales en total.";
+    ul.innerHTML="";
+    if(!list.length){var em=document.createElement("li");em.textContent="No hay reservas registradas en este navegador para este día.";em.style.color="var(--muted)";ul.appendChild(em);return}
+    list.forEach(function(r){
+      var li=document.createElement("li"); li.className="res "+r.estado;
+      li.innerHTML='<div><strong></strong> <span class="chip"></span><br><small></small></div><div class="acts"></div>';
+      li.querySelector("strong").textContent=r.hora+" · "+r.nombre+" ("+r.personas+" pers.)";
+      li.querySelector(".chip").textContent=ESTADOS[r.estado]||r.estado;
+      li.querySelector("small").textContent=[r.tel,r.notas].filter(Boolean).join(" · ");
+      var acts=li.querySelector(".acts");
+      function btn(text,fn){var b=document.createElement("button");b.type="button";b.className="sm";b.textContent=text;b.addEventListener("click",fn);acts.appendChild(b)}
+      if(r.estado!=="confirmada") btn("Confirmar",function(){r.estado="confirmada";saveStoredRes(rows);draw()});
+      if(r.estado!=="cancelada") btn("Cancelar",function(){r.estado="cancelada";saveStoredRes(rows);draw()});
+      btn("Eliminar",function(){
+        var filtered=rows.filter(function(x){return x.id!==r.id});
+        saveStoredRes(filtered); draw();
+      });
+      ul.appendChild(li);
+    });
+  }
+
+  $("addForm").addEventListener("submit",function(e){
+    e.preventDefault();
+    var rows=getStoredRes();
+    rows.push({id:String(Date.now()),nombre:$("aNombre").value.trim(),tel:$("aTel").value.trim(),personas:+$("aPers").value,
+      fecha:$("aDate").value,hora:$("aHora").value,notas:$("aNotas").value.trim(),estado:"confirmada",creada:Date.now()});
+    saveStoredRes(rows);
+    $("aNombre").value="";$("aTel").value="";$("aNotas").value="";draw();
+  });
+
+  // Editor con descarga directa del archivo HTML actualizado
+  var ORDER=[1,2,3,4,5,6,0];
+  function t2h(v){if(!v) return null;var q=v.split(":");return +q[0]+q[1]/60}
+  function addRow(fs,n,pr,before){
+    var r=document.createElement("div"); r.className="irow";
+    r.innerHTML='<input aria-label="Plato" placeholder="Plato (usa ★ para destacar)"><input aria-label="Precio" placeholder="Precio"><button type="button" class="sm">Quitar</button>';
+    r.children[0].value=n; r.children[1].value=pr;
+    r.children[2].addEventListener("click",function(){r.remove()});
+    fs.insertBefore(r,before||null);
+  }
+  function fillEditor(){
+    var box=$("eMenu"); box.innerHTML="";
+    Object.keys(MENU).forEach(function(k){
+      var fs=document.createElement("fieldset"); fs.className="esec";
+      var lg=document.createElement("legend"); lg.textContent=k; fs.appendChild(lg);
+      MENU[k].forEach(function(it){addRow(fs,it[0],it[1])});
+      var add=document.createElement("button"); add.type="button"; add.className="sm"; add.textContent="+ Añadir plato";
+      add.addEventListener("click",function(){addRow(fs,"","",add)});
+      fs.appendChild(add); box.appendChild(fs);
+    });
+    var eh=$("eHours"); eh.innerHTML="";
+    ORDER.forEach(function(d){
+      var row=document.createElement("div"); row.className="hrow";
+      row.innerHTML='<label class="chk"><input type="checkbox"><span></span></label><input type="time" aria-label="Abre"><input type="time" aria-label="Cierra">';
+      row.querySelector("span").textContent=DAYS[d];
+      var cb=row.querySelector("input"), a=row.children[1], b=row.children[2], sc=SCHED[d];
+      cb.checked=!!sc; a.value=sc?hh(sc[0]):"18:00"; b.value=sc?hh(sc[1]):"00:00";
+      function sync(){a.disabled=b.disabled=!cb.checked}
+      cb.addEventListener("change",sync); sync();
+      eh.appendChild(row);
+    });
+    $("eTel").value=TEL;
+    $("eMail").value=EMAIL;
+  }
+  function collectMenu(){
+    var m=Object.create(null);
+    Array.prototype.forEach.call($("eMenu").children,function(fs){
+      var items=[];
+      Array.prototype.forEach.call(fs.querySelectorAll(".irow"),function(r){
+        var n=r.children[0].value.trim().slice(0,80); if(n) items.push([n,r.children[1].value.trim().slice(0,20)]);
+      });
+      if(items.length) m[fs.querySelector("legend").textContent]=items;
+    });
+    return m;
+  }
+  function build(nd){
+    var json=JSON.stringify(nd).replace(/</g,"\\u003c");
+    var body=BODY0.replace(/(<script type="application\/json" id="data">)[\s\S]*?(<\/script>)/,function(_,a,b){return a+json+b});
+    return '<!DOCTYPE html>\n<html lang="es"><head>'+HEAD0+'</head><body>'+body+'</body></html>';
+  }
+  $("publishBtn").addEventListener("click",function(){
+    var msg=$("editMsg"), ok=$("editOk"); msg.textContent=""; ok.textContent="";
+    var menu=collectMenu();
+    if(!Object.keys(menu).length){msg.textContent="La carta necesita al menos un plato.";return}
+    var sched={}, hr=$("eHours").children;
+    ORDER.forEach(function(d,i){
+      var on=hr[i].querySelector("input").checked, a=t2h(hr[i].children[1].value), b=t2h(hr[i].children[2].value);
+      sched[d]=(!on||a===null||b===null)?null:[a,b<=a?b+24:b];
+    });
+    var newData={menu:menu,horario:sched,tel:$("eTel").value.trim()||TEL,email:$("eMail").value.trim()||EMAIL};
+    MENU=newData.menu; SCHED=newData.horario; TEL=newData.tel; EMAIL=newData.email;
+    try{localStorage.setItem("bc_site_data",JSON.stringify(newData))}catch(e){}
+    renderMenu(); renderHours(); renderContact(); updateAvailableHours();
+
+    var blob=new Blob([build(newData)],{type:"text/html;charset=utf-8"});
+    var a=document.createElement("a");
+    a.href=URL.createObjectURL(blob);
+    a.download="index.html";
+    a.click();
+    ok.textContent="¡Cambios aplicados y archivo index.html descargado!";
+  });
+})();
+</script>
+</body>
+</html>
