@@ -82,10 +82,10 @@ h1{margin:0;font-size:clamp(3.4rem,10vw,6.2rem);line-height:.92;font-weight:800;
 .btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1.5px solid rgba(255,255,255,.25);box-shadow:none}
 .btn-ghost:hover{background:rgba(255,255,255,.2)}
 
-/* Pizarra del bar */
+/* Pizarra del bar - Adaptada para que nunca se corte nada */
 .board{
   background:var(--board);color:var(--chalk);border:12px solid var(--wood);border-radius:10px;
-  padding:1.5rem 1.5rem 1.3rem;box-shadow:0 20px 40px rgba(0,0,0,.4), inset 0 0 30px rgba(0,0,0,.35);
+  padding:1.5rem 1.4rem 1.3rem;box-shadow:0 20px 40px rgba(0,0,0,.4), inset 0 0 30px rgba(0,0,0,.35);
   font-family:var(--chalkfont);animation:rise .6s ease-out both;position:relative;
 }
 @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
@@ -93,21 +93,65 @@ h1{margin:0;font-size:clamp(3.4rem,10vw,6.2rem);line-height:.92;font-weight:800;
 .board h2{margin:0;font-size:2.6rem;font-weight:400;line-height:1;color:var(--mustard)}
 .board-sub{font-family:var(--sans);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;opacity:.7}
 .tabs{display:flex;gap:1.1rem;margin-bottom:1rem;flex-wrap:wrap;border-bottom:1px dashed rgba(245,243,235,.2);padding-bottom:.4rem}
-.tab{font:inherit;font-size:1.5rem;background:none;border:0;border-bottom:3px solid transparent;color:rgba(245,243,235,.55);padding:.1rem .2rem;cursor:pointer;transition:color .2s}
+.tab{font:inherit;font-size:1.4rem;background:none;border:0;border-bottom:3px solid transparent;color:rgba(245,243,235,.55);padding:.1rem .2rem;cursor:pointer;transition:color .2s}
 .tab:hover{color:var(--chalk)}
 .tab[aria-selected="true"]{color:var(--chalk);border-bottom-color:var(--mustard)}
+
+/* Lista de ítems optimizada para fluir sin romper diseño */
 .items{list-style:none;margin:0;padding:0;min-height:15.5rem}
-.items li{display:flex;align-items:baseline;gap:.5rem;font-size:1.55rem;line-height:1.85;padding:0 .3rem;border-radius:4px;transition:background .15s}
+.items li{
+  display:flex;
+  align-items:center;
+  flex-wrap:nowrap;
+  gap:.4rem;
+  font-size:1.35rem;
+  line-height:1.5;
+  padding:.3rem .3rem;
+  border-radius:4px;
+  transition:background .15s;
+}
 .items li:hover{background:rgba(255,255,255,.05)}
-.items .fill{flex:1;border-bottom:2px dotted rgba(245,243,235,.35);transform:translateY(-.3rem)}
-.items .price{color:var(--mustard);font-weight:700}
-.items .tag{font-family:var(--sans);font-size:.68rem;font-weight:700;color:#fff;padding:.1rem .45rem;border-radius:4px;vertical-align:middle;margin-left:.35rem;letter-spacing:.03em;text-transform:uppercase}
+.items .item-left{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:.4rem;
+  min-width:0;
+  flex:1;
+}
+.items .item-name{
+  word-break:break-word;
+}
+.items .fill{
+  flex:1;
+  min-width:1rem;
+  border-bottom:2px dotted rgba(245,243,235,.35);
+  transform:translateY(-.2rem);
+}
+.items .price{
+  color:var(--mustard);
+  font-weight:700;
+  flex-shrink:0;
+  white-space:nowrap;
+}
+.items .tag{
+  font-family:var(--sans);
+  font-size:.62rem;
+  font-weight:700;
+  color:#fff;
+  padding:.1rem .35rem;
+  border-radius:4px;
+  vertical-align:middle;
+  letter-spacing:.03em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
 .items .tag.star{background:var(--accent)}
 .items .tag.veg{background:var(--veg)}
 .items.swap{animation:fade .25s ease-out}
 @keyframes fade{from{opacity:0}to{opacity:1}}
-.note{margin:.9rem 0 0;font-size:1.2rem;color:rgba(245,243,235,.75);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.5rem;border-top:1px dashed rgba(245,243,235,.15);padding-top:.6rem}
-.allergens{font-family:var(--sans);font-size:.78rem;opacity:.75}
+.note{margin:.9rem 0 0;font-size:1.1rem;color:rgba(245,243,235,.75);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.5rem;border-top:1px dashed rgba(245,243,235,.15);padding-top:.6rem}
+.allergens{font-family:var(--sans);font-size:.74rem;opacity:.75}
 
 /* Banda de esencias del bar */
 .highlights{background:var(--field);border-bottom:1px solid var(--line);padding:2rem 0}
@@ -392,7 +436,7 @@ dialog h2{margin:0 0 1rem;font-size:1.4rem}
   }
   renderContact();
 
-  // Renderizado de la Pizarra con soporte para ★ (Top) y [V] (Vegetariano)
+  // Renderizado optimizado de la Pizarra con estructura flexible para etiquetas y precios
   var tabsEl=$("tabs"), itemsEl=$("items");
   function renderMenu(){
     tabsEl.innerHTML="";
@@ -406,19 +450,21 @@ dialog h2{margin:0 0 1rem;font-size:1.4rem}
         var isStar=rawName.indexOf("★")!==-1;
         var isVeg=rawName.indexOf("[V]")!==-1;
         var cleanName=rawName.replace(/★/g,"").replace(/\[V\]/g,"").trim();
-        li.innerHTML='<span></span><span class="fill"></span><span class="price"></span>';
-        li.children[0].textContent=cleanName;
+        
+        li.innerHTML='<div class="item-left"><span class="item-name"></span></div><span class="fill"></span><span class="price"></span>';
+        li.querySelector(".item-name").textContent=cleanName;
+        
         if(isStar){
           var b1=document.createElement("span");
           b1.className="tag star"; b1.textContent="Top";
-          li.children[0].appendChild(b1);
+          li.querySelector(".item-left").appendChild(b1);
         }
         if(isVeg){
           var b2=document.createElement("span");
           b2.className="tag veg"; b2.textContent="🌱 Veg";
-          li.children[0].appendChild(b2);
+          li.querySelector(".item-left").appendChild(b2);
         }
-        li.children[2].textContent=it[1];
+        li.querySelector(".price").textContent=it[1];
         itemsEl.appendChild(li);
       });
       if(animate){itemsEl.classList.remove("swap");void itemsEl.offsetWidth;itemsEl.classList.add("swap");}
