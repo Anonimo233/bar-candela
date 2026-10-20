@@ -3,8 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Bar Candela · Vermutería & Tapas</title>
-<meta name="description" content="Vermut de grifo, tapas caseras de las de antes y buen ambiente en Bar Candela. Reserva tu mesa online.">
+<title>Bar Candela · Vermutería & Tapas Tradicionales</title>
+<meta name="description" content="Vermut de grifo bien tirado, tapas caseras de las de antes y mesa para quedarse charlando en Bar Candela. Reserva tu mesa online al instante.">
+<meta name="theme-color" content="#1E358B">
+
+<!-- Open Graph / Vista previa en WhatsApp, Discord y Redes -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://anonimo233.github.io/bar-candela/">
+<meta property="og:title" content="Bar Candela · Vermutería & Tapas">
+<meta property="og:description" content="Vermut de grifo, tapas caseras de las de antes y buen ambiente. Consulta la pizarra de hoy y reserva tu mesa.">
+
+<!-- Favicon SVG integrado sin archivos externos -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍷</text></svg>">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Caveat+Brush&display=swap" rel="stylesheet">
@@ -12,7 +23,7 @@
 :root{
   --wall:#1E358B; --grout:rgba(255,255,255,.09);
   --paper:#F6F4EE; --ink:#14213D; --muted:#4B5A78; --field:#FFFFFF; --line:#D5DCE6;
-  --board:#192420; --chalk:#F5F3EB; --wood:#7C4D2B; --mustard:#F2B830; --accent:#D94E34;
+  --board:#192420; --chalk:#F5F3EB; --wood:#7C4D2B; --mustard:#F2B830; --accent:#D94E34; --veg:#2E8B57;
   --sans:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
   --chalkfont:"Caveat Brush","Segoe Print",cursive;
   color-scheme:light;
@@ -40,7 +51,7 @@ a{color:inherit}
   border-bottom:1px solid rgba(255,255,255,.12);color:#fff;padding:.75rem 0;
 }
 .navbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem}
-.brand{font-weight:800;font-size:1.35rem;color:var(--mustard);text-decoration:none;letter-spacing:-.02em;display:flex;align-items:center;gap:.5rem}
+.brand{font-weight:800;font-size:1.35rem;color:var(--mustard);text-decoration:none;letter-spacing:-.02em;display:flex;align-items:center;gap:.45rem}
 .nav-links{display:flex;gap:1.25rem;align-items:center;font-size:.95rem;font-weight:600}
 .nav-links a{text-decoration:none;opacity:.9;transition:opacity .2s}
 .nav-links a:hover{opacity:1;color:var(--mustard)}
@@ -66,7 +77,8 @@ h1{margin:0;font-size:clamp(3.4rem,10vw,6.2rem);line-height:.92;font-weight:800;
 .status.open .dot{background:#5BE08A;box-shadow:0 0 0 4px rgba(91,224,138,.25)}
 .hero-actions{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:1.6rem}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;background:var(--mustard);color:#192420;font:inherit;font-weight:800;padding:.85rem 1.5rem;border:0;border-radius:8px;text-decoration:none;cursor:pointer;transition:transform .15s,filter .15s;box-shadow:0 4px 14px rgba(0,0,0,.18)}
-.btn:hover{filter:brightness(1.06);transform:translateY(-2px)}
+.btn:hover:not(:disabled){filter:brightness(1.06);transform:translateY(-2px)}
+.btn:disabled{opacity:.55;cursor:not-allowed}
 .btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1.5px solid rgba(255,255,255,.25);box-shadow:none}
 .btn-ghost:hover{background:rgba(255,255,255,.2)}
 
@@ -79,7 +91,7 @@ h1{margin:0;font-size:clamp(3.4rem,10vw,6.2rem);line-height:.92;font-weight:800;
 @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .board-header{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:.5rem;margin-bottom:.6rem}
 .board h2{margin:0;font-size:2.6rem;font-weight:400;line-height:1;color:var(--mustard)}
-.board-sub{font-family:var(--sans);font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;opacity:.65}
+.board-sub{font-family:var(--sans);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;opacity:.7}
 .tabs{display:flex;gap:1.1rem;margin-bottom:1rem;flex-wrap:wrap;border-bottom:1px dashed rgba(245,243,235,.2);padding-bottom:.4rem}
 .tab{font:inherit;font-size:1.5rem;background:none;border:0;border-bottom:3px solid transparent;color:rgba(245,243,235,.55);padding:.1rem .2rem;cursor:pointer;transition:color .2s}
 .tab:hover{color:var(--chalk)}
@@ -89,10 +101,13 @@ h1{margin:0;font-size:clamp(3.4rem,10vw,6.2rem);line-height:.92;font-weight:800;
 .items li:hover{background:rgba(255,255,255,.05)}
 .items .fill{flex:1;border-bottom:2px dotted rgba(245,243,235,.35);transform:translateY(-.3rem)}
 .items .price{color:var(--mustard);font-weight:700}
-.items .star{font-family:var(--sans);font-size:.7rem;background:var(--accent);color:#fff;padding:.1rem .45rem;border-radius:4px;vertical-align:middle;margin-left:.35rem;letter-spacing:.03em;text-transform:uppercase}
+.items .tag{font-family:var(--sans);font-size:.68rem;font-weight:700;color:#fff;padding:.1rem .45rem;border-radius:4px;vertical-align:middle;margin-left:.35rem;letter-spacing:.03em;text-transform:uppercase}
+.items .tag.star{background:var(--accent)}
+.items .tag.veg{background:var(--veg)}
 .items.swap{animation:fade .25s ease-out}
 @keyframes fade{from{opacity:0}to{opacity:1}}
-.note{margin:.9rem 0 0;font-size:1.25rem;color:rgba(245,243,235,.75);display:flex;justify-content:space-between;align-items:center}
+.note{margin:.9rem 0 0;font-size:1.2rem;color:rgba(245,243,235,.75);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.5rem;border-top:1px dashed rgba(245,243,235,.15);padding-top:.6rem}
+.allergens{font-family:var(--sans);font-size:.78rem;opacity:.75}
 
 /* Banda de esencias del bar */
 .highlights{background:var(--field);border-bottom:1px solid var(--line);padding:2rem 0}
@@ -116,20 +131,23 @@ dl.hours dd{margin:0;color:var(--muted);font-weight:500}
 dl.hours .today{background:var(--wall);color:#fff;border-radius:6px;border-bottom-color:transparent}
 dl.hours .today dd{color:var(--mustard);font-weight:700}
 .where{margin-top:1.4rem;padding-top:1.2rem;border-top:1px dashed var(--line);color:var(--muted);font-size:.96rem}
-.where strong{color:var(--ink)}
+.where strong{color:var(--ink);font-size:1.05rem}
+.map-btn{display:inline-flex;align-items:center;gap:.4rem;margin-top:.8rem;font-size:.9rem;font-weight:700;color:var(--wall);text-decoration:none;padding:.45rem .85rem;border:1.5px solid var(--line);border-radius:6px;background:var(--paper)}
+.map-btn:hover{border-color:var(--wall)}
 
 form{display:grid;gap:1rem}
 label{display:grid;gap:.35rem;font-weight:700;font-size:.93rem}
 input,select,textarea{font:inherit;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:8px;padding:.7rem .85rem;width:100%}
 input:focus,select:focus,textarea:focus{border-color:var(--wall);background:var(--field)}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media (max-width:520px){.row{grid-template-columns:1fr}}
 .result{display:none;margin-top:1.25rem;padding:1.2rem;border-left:5px solid var(--wall);background:var(--paper);border-radius:0 8px 8px 0}
 .result.show{display:block}
 .result p{margin:.3rem 0}
 
 footer{padding:3rem 0 3.5rem;font-size:.95rem}
 footer .wrap{display:flex;flex-wrap:wrap;gap:1.5rem 3rem;justify-content:space-between;align-items:center}
-footer p{margin:.2rem 0}
+footer p{margin:.25rem 0}
 footer .name{font-weight:800;font-size:1.4rem;color:var(--mustard)}
 .link-btn{background:none;border:0;color:inherit;font:inherit;text-decoration:underline;cursor:pointer;padding:0;opacity:.85}
 dialog{border:0;border-radius:12px;padding:1.6rem;background:var(--field);color:var(--ink);width:min(23rem,92vw);box-shadow:0 20px 50px rgba(0,0,0,.4)}
@@ -153,9 +171,9 @@ dialog h2{margin:0 0 1rem;font-size:1.4rem}
 .res.confirmada .chip{background:#BFE8CC;color:#14391F}
 .res.pendiente .chip{background:var(--mustard);color:#1E2A25}
 .acts{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
-.sm{font:inherit;font-size:.88rem;font-weight:600;padding:.45rem .85rem;border:1.5px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink);cursor:pointer}
+.sm{font:inherit;font-size:.88rem;font-weight:600;padding:.45rem .85rem;border:1.5px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink);cursor:pointer;text-decoration:none}
 .sm:hover{border-color:var(--wall)}
-.editor{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--line);max-width:40rem}
+.editor{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--line);max-width:42rem}
 .editor summary{font-weight:800;cursor:pointer;font-size:1.15rem}
 .editor>*:not(summary){margin-top:1rem}
 .hrow{display:grid;grid-template-columns:8.5rem 1fr 1fr;gap:.6rem;align-items:center;margin:.5rem 0}
@@ -164,6 +182,7 @@ dialog h2{margin:0 0 1rem;font-size:1.4rem}
 .irow{display:grid;grid-template-columns:1fr 6rem auto;gap:.5rem;margin-bottom:.5rem}
 .chk{display:flex;gap:.5rem;align-items:center;font-weight:600}
 .chk input{width:auto}
+@media (prefers-reduced-motion:reduce){.board,.items.swap{animation:none}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
@@ -199,10 +218,10 @@ dialog h2{margin:0 0 1rem;font-size:1.4rem}
       </div>
       <div class="tabs" role="tablist" aria-label="Secciones de la carta" id="tabs"></div>
       <ul class="items" id="items" role="tabpanel"></ul>
-      <p class="note">
+      <div class="note">
         <span>✨ Pregunta en barra por la cazuelita del día.</span>
-        <small>IVA incl.</small>
-      </p>
+        <span class="allergens">🌱 Opción vegetariana · Consulta alérgenos en barra · IVA incl.</span>
+      </div>
     </div>
   </div>
 </header>
@@ -213,7 +232,7 @@ dialog h2{margin:0 0 1rem;font-size:1.4rem}
       <span class="hl-icon">🛢️</span>
       <div>
         <h3>Vermut de barrica</h3>
-        <p>Macerado con botánicos tradicionales, servido con su aceituna y rodaja de naranja.</p>
+        <p>Macerado con botánicos tradicionales, servido bien frío con su aceituna y naranja.</p>
       </div>
     </div>
     <div class="hl-card">
@@ -227,7 +246,7 @@ dialog h2{margin:0 0 1rem;font-size:1.4rem}
       <span class="hl-icon">🪑</span>
       <div>
         <h3>Barra libre y 6 mesas</h3>
-        <p>Las mesas se reservan para grupos o cenas; en la barra siempre hacemos hueco.</p>
+        <p>Las mesas se reservan para comidas o cenas; en la barra siempre hacemos hueco.</p>
       </div>
     </div>
   </div>
@@ -255,19 +274,21 @@ dialog h2{margin:0 0 1rem;font-size:1.4rem}
     <ul class="res-list" id="adminList"></ul>
 
     <details class="editor" id="editor">
-      <summary>⚙️ Editar carta, horario y datos de contacto</summary>
+      <summary>⚙️ Editar carta, horario, dirección y contacto</summary>
+      <p style="font-size:.88rem;color:var(--muted);margin:.4rem 0">Tip: Añade <code>★</code> al nombre de un plato para marcarlo como <b>Top</b>, o <code>[V]</code> para marcarlo como <b>Vegetariano</b>.</p>
       <div id="eMenu"></div>
       <fieldset class="esec"><legend>Horario semanal</legend><div id="eHours"></div></fieldset>
       <div class="row">
         <label>Teléfono / WhatsApp<input id="eTel" inputmode="tel"></label>
-        <label>Correo electrónico<input id="eMail" type="email"></label>
+        <label>Correo electrónico (recibe reservas)<input id="eMail" type="email"></label>
       </div>
+      <label style="margin-top:.8rem">Dirección física del local<input id="eAddr"></label>
       <p class="err" id="editMsg" role="alert"></p>
       <p class="ok-msg" id="editOk" role="status"></p>
       <div class="acts">
-        <button class="btn" id="publishBtn" type="button" style="margin:0">Guardar y descargar HTML actualizado</button>
+        <button class="btn" id="publishBtn" type="button" style="margin:0">Guardar y descargar index.html actualizado</button>
       </div>
-      <p style="color:var(--muted);font-size:.88rem">Los cambios se aplican al instante en este navegador y se descarga el archivo <code>index.html</code> listo para actualizar tu servidor.</p>
+      <p style="color:var(--muted);font-size:.88rem">Los cambios se ven al instante en tu navegador y se descarga el archivo <code>index.html</code> listo para subir a GitHub.</p>
     </details>
   </div>
 </section>
@@ -275,11 +296,13 @@ dialog h2{margin:0 0 1rem;font-size:1.4rem}
 <section class="info" id="horario">
   <div class="wrap cols">
     <div class="card-box">
-      <h2 class="sec">Horario</h2>
+      <h2 class="sec">Horario y Ubicación</h2>
       <dl class="hours" id="hours"></dl>
       <div class="where">
-        <strong>📍 Calle del Ejemplo, 12.</strong><br>
-        Barra tradicional y seis mesas bajas. Para picar en la barra no hace falta avisar; si quieres asegurar mesa, resérvala aquí al lado.
+        <strong id="addrText">📍 Rúa do Franco, 12 · Casco Histórico</strong><br>
+        Contamos con barra tradicional y seis mesas bajas. Para tomar el vermut o picar algo rápido en la barra no hace falta avisar; si quieres asegurar mesa, resérvala en el formulario.
+        <br>
+        <a class="map-btn" id="mapLink" href="https://www.google.com/maps/search/?api=1&query=Rua+do+Franco+12+Santiago+de+Compostela" target="_blank" rel="noopener">🗺️ Cómo llegar en Google Maps</a>
       </div>
     </div>
 
@@ -306,8 +329,8 @@ dialog h2{margin:0 0 1rem;font-size:1.4rem}
           <label>Hora disponible
             <select name="hora" id="hora" required=""></select>
           </label>
-          <label>Nota opcional
-            <input name="nota" placeholder="Ej. Cerca de ventana">
+          <label>Nota o preferencia (opcional)
+            <input name="nota" placeholder="Ej. Alergia al gluten, mesa tranquila...">
           </label>
         </div>
         <button class="btn" id="submitBtn" type="submit" style="margin-top:.4rem">Confirmar solicitud de mesa</button>
@@ -321,10 +344,10 @@ dialog h2{margin:0 0 1rem;font-size:1.4rem}
   <div class="wrap">
     <div>
       <p class="name">Bar Candela</p>
-      <p>Calle del Ejemplo, 12 · Teléfono <span id="fTel">647 685 229</span></p>
+      <p><span id="fAddr">Rúa do Franco, 12 · Casco Histórico</span> · Tel. <span id="fTel">647 685 229</span></p>
     </div>
     <div>
-      <p>Contacto directo: <a id="fMail" href="mailto:tineoalessandro9@gmail.com">tineoalessandro9@gmail.com</a></p>
+      <p>Reservas y contacto: <a id="fMail" href="mailto:tineoalessandro9@gmail.com">tineoalessandro9@gmail.com</a></p>
       <p><button class="link-btn" id="openLogin" type="button">Acceso propietario</button></p>
     </div>
     <dialog id="login">
@@ -341,7 +364,7 @@ dialog h2{margin:0 0 1rem;font-size:1.4rem}
   </div>
 </footer>
 
-<script type="application/json" id="data">{"menu":{"Para picar":[["Croquetas caseras de jamón ★","6,50 €"],["Patatas bravas con salsa candela ★","6,00 €"],["Boquerones en vinagre","7,00 €"],["Tortilla jugosa al momento (pincho)","3,50 €"],["Tabla de quesos curados","12,00 €"]],"Bocatas":[["Calamares crujientes con alioli ★","7,50 €"],["Lomo adobado con queso fundido","7,00 €"],["Pepito de ternera a la plancha","8,00 €"],["Vegetal asado con hummus casero","6,50 €"]],"Para beber":[["Vermut de grifo casero ★","3,20 €"],["Caña bien tirada","2,20 €"],["Vino de la casa (copa)","2,80 €"],["Cóctel Candela especial","8,00 €"],["Mosto o refresco","2,50 €"]]},"horario":{"0":[12,17],"1":null,"2":[17.5,24],"3":[18,24],"4":[18,24],"5":[12,26],"6":[12,26]},"tel":"647685229","email":"tineoalessandro9@gmail.com"}</script>
+<script type="application/json" id="data">{"menu":{"Para picar":[["Croquetas caseras de jamón ibérico ★","6,50 €"],["Patatas bravas con salsa candela ★ [V]","6,00 €"],["Boquerones en vinagre al ajo perejil","7,00 €"],["Tortilla jugosa cuajada al momento [V]","3,50 €"],["Tabla de quesos curados de la tierra [V]","12,00 €"]],"Bocatas":[["Calamares crujientes con alioli casero ★","7,50 €"],["Lomo adobado con queso fundido","7,00 €"],["Pepito de ternera gallega a la plancha","8,00 €"],["Vegetal asado con hummus casero [V]","6,50 €"]],"Para beber":[["Vermut de grifo casero ★","3,20 €"],["Caña bien tirada","2,20 €"],["Vino de la casa (copa)","2,80 €"],["Cóctel Candela especial","8,00 €"],["Mosto tradicional o refresco","2,50 €"]]},"horario":{"0":[12,17],"1":null,"2":[17.5,24],"3":[18,24],"4":[18,24],"5":[12,26],"6":[12,26]},"tel":"647685229","email":"tineoalessandro9@gmail.com","addr":"Rúa do Franco, 12 · Casco Histórico"}</script>
 <script>
 (function(){
   var HEAD0=document.head.innerHTML, BODY0=document.body.innerHTML;
@@ -357,15 +380,19 @@ dialog h2{margin:0 0 1rem;font-size:1.4rem}
   var SCHED=DATA.horario||{0:[12,17],1:null,2:[17.5,24],3:[18,24],4:[18,24],5:[12,26],6:[12,26]};
   var TEL=DATA.tel||"647685229";
   var EMAIL=DATA.email||"tineoalessandro9@gmail.com";
+  var ADDR=DATA.addr||"Rúa do Franco, 12 · Casco Histórico";
 
   function renderContact(){
     $("fTel").textContent=TEL;
     $("fMail").textContent=EMAIL;
     $("fMail").href="mailto:"+EMAIL;
+    $("addrText").textContent="📍 "+ADDR;
+    $("fAddr").textContent=ADDR;
+    $("mapLink").href="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(ADDR);
   }
   renderContact();
 
-  // Renderizado de la Pizarra
+  // Renderizado de la Pizarra con soporte para ★ (Top) y [V] (Vegetariano)
   var tabsEl=$("tabs"), itemsEl=$("items");
   function renderMenu(){
     tabsEl.innerHTML="";
@@ -377,13 +404,19 @@ dialog h2{margin:0 0 1rem;font-size:1.4rem}
         var li=document.createElement("li");
         var rawName=it[0];
         var isStar=rawName.indexOf("★")!==-1;
-        var cleanName=rawName.replace("★","").trim();
+        var isVeg=rawName.indexOf("[V]")!==-1;
+        var cleanName=rawName.replace(/★/g,"").replace(/\[V\]/g,"").trim();
         li.innerHTML='<span></span><span class="fill"></span><span class="price"></span>';
         li.children[0].textContent=cleanName;
         if(isStar){
-          var badge=document.createElement("span");
-          badge.className="star"; badge.textContent="Top";
-          li.children[0].appendChild(badge);
+          var b1=document.createElement("span");
+          b1.className="tag star"; b1.textContent="Top";
+          li.children[0].appendChild(b1);
+        }
+        if(isVeg){
+          var b2=document.createElement("span");
+          b2.className="tag veg"; b2.textContent="🌱 Veg";
+          li.children[0].appendChild(b2);
         }
         li.children[2].textContent=it[1];
         itemsEl.appendChild(li);
@@ -465,31 +498,58 @@ dialog h2{margin:0 0 1rem;font-size:1.4rem}
   fecha.addEventListener("change",updateAvailableHours);
   updateAvailableHours();
 
-  // Almacenamiento de reservas en navegador + envío directo a WhatsApp / Correo
+  // Almacenamiento de reservas + Envío automático en segundo plano al correo + WhatsApp
   function getStoredRes(){try{return JSON.parse(localStorage.getItem("bc_reservas"))||[]}catch(e){return []}}
   function saveStoredRes(arr){try{localStorage.setItem("bc_reservas",JSON.stringify(arr))}catch(e){}}
 
-  $("form").addEventListener("submit",function(e){
+  $("form").addEventListener("submit",async function(e){
     e.preventDefault();
-    var f=e.target, nombre=f.nombre.value.trim(), nota=f.nota.value.trim();
+    var f=e.target, nombre=f.nombre.value.trim(), telVal=f.tel.value.trim(), nota=f.nota.value.trim();
     var dateText=new Date(f.fecha.value+"T12:00:00").toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"long"});
     var resumen="Reserva en Bar Candela a nombre de "+nombre+" para "+(f.personas.value==="1"?"1 persona":f.personas.value+" personas")+", el "+dateText+" a las "+f.hora.value+"."+(nota?" Nota: "+nota+".":"");
     
     var list=getStoredRes();
-    list.push({id:String(Date.now()),nombre:nombre.slice(0,60),tel:f.tel.value.trim().slice(0,25),personas:+f.personas.value,fecha:f.fecha.value,hora:f.hora.value,notas:nota.slice(0,100),estado:"pendiente",creada:Date.now()});
+    list.push({id:String(Date.now()),nombre:nombre.slice(0,60),tel:telVal.slice(0,25),personas:+f.personas.value,fecha:f.fecha.value,hora:f.hora.value,notas:nota.slice(0,100),estado:"pendiente",creada:Date.now()});
     saveStoredRes(list);
 
-    var mail="mailto:"+EMAIL+"?subject="+encodeURIComponent("Reserva de mesa - "+nombre)+"&body="+encodeURIComponent(resumen+"\nTeléfono: "+f.tel.value.trim());
+    submitBtn.disabled=true;
+    submitBtn.textContent="Enviando solicitud...";
+
+    var autoSent=false;
+    try{
+      var res=await fetch("https://formsubmit.co/ajax/"+encodeURIComponent(EMAIL),{
+        method:"POST",
+        headers:{"Content-Type":"application/json","Accept":"application/json"},
+        body:JSON.stringify({
+          _subject:"🍷 Nueva reserva en Bar Candela - "+nombre,
+          Cliente:nombre,
+          Telefono:telVal,
+          Personas:f.personas.value,
+          Fecha:f.fecha.value,
+          Hora:f.hora.value,
+          Notas:nota||"Sin notas",
+          Resumen:resumen
+        })
+      });
+      if(res.ok) autoSent=true;
+    }catch(err){}
+
+    submitBtn.disabled=false;
+    submitBtn.textContent="Confirmar solicitud de mesa";
+
+    var mail="mailto:"+EMAIL+"?subject="+encodeURIComponent("Reserva de mesa - "+nombre)+"&body="+encodeURIComponent(resumen+"\nTeléfono: "+telVal);
     var r=$("result");
     var d=String(TEL).replace(/\D/g,""); if(d.length===9) d="34"+d;
     var wa="https://wa.me/"+d+"?text="+encodeURIComponent("¡Hola Bar Candela! Quiero reservar mesa:\n"+resumen);
     
-    r.innerHTML='<p style="font-weight:700"></p><p style="font-size:.92rem;color:var(--muted)"></p><p class="acts" style="margin-top:.8rem"><a class="btn" target="_blank" rel="noopener" style="margin:0"></a><a class="sm" style="text-decoration:none"></a></p>';
+    r.innerHTML='<p style="font-weight:700"></p><p style="font-size:.92rem;color:var(--muted)"></p><p class="acts" style="margin-top:.8rem"><a class="btn" target="_blank" rel="noopener" style="margin:0"></a><a class="sm"></a></p>';
     r.children[0].textContent=resumen;
-    r.children[1].textContent="Elige cómo enviarnos tu solicitud para confirmarte la mesa al instante:";
+    r.children[1].textContent=autoSent
+      ? "✅ Hemos enviado tu solicitud por correo automáticamente al bar. Si quieres confirmación inmediata, pulsa también en WhatsApp:"
+      : "Elige cómo enviarnos tu solicitud para confirmarte la mesa al instante:";
     var as=r.querySelectorAll("a");
-    as[0].href=wa; as[0].textContent="📲 Enviar por WhatsApp";
-    as[1].href=mail; as[1].textContent="✉️ Enviar al correo";
+    as[0].href=wa; as[0].textContent="📲 Confirmar por WhatsApp";
+    as[1].href=mail; as[1].textContent="✉️ Abrir app de correo";
     r.classList.add("show");
   });
 
@@ -567,7 +627,7 @@ dialog h2{margin:0 0 1rem;font-size:1.4rem}
   function t2h(v){if(!v) return null;var q=v.split(":");return +q[0]+q[1]/60}
   function addRow(fs,n,pr,before){
     var r=document.createElement("div"); r.className="irow";
-    r.innerHTML='<input aria-label="Plato" placeholder="Plato (usa ★ para destacar)"><input aria-label="Precio" placeholder="Precio"><button type="button" class="sm">Quitar</button>';
+    r.innerHTML='<input aria-label="Plato" placeholder="Plato (usa ★ o [V])"><input aria-label="Precio" placeholder="Precio"><button type="button" class="sm">Quitar</button>';
     r.children[0].value=n; r.children[1].value=pr;
     r.children[2].addEventListener("click",function(){r.remove()});
     fs.insertBefore(r,before||null);
@@ -595,6 +655,7 @@ dialog h2{margin:0 0 1rem;font-size:1.4rem}
     });
     $("eTel").value=TEL;
     $("eMail").value=EMAIL;
+    $("eAddr").value=ADDR;
   }
   function collectMenu(){
     var m=Object.create(null);
@@ -621,8 +682,14 @@ dialog h2{margin:0 0 1rem;font-size:1.4rem}
       var on=hr[i].querySelector("input").checked, a=t2h(hr[i].children[1].value), b=t2h(hr[i].children[2].value);
       sched[d]=(!on||a===null||b===null)?null:[a,b<=a?b+24:b];
     });
-    var newData={menu:menu,horario:sched,tel:$("eTel").value.trim()||TEL,email:$("eMail").value.trim()||EMAIL};
-    MENU=newData.menu; SCHED=newData.horario; TEL=newData.tel; EMAIL=newData.email;
+    var newData={
+      menu:menu,
+      horario:sched,
+      tel:$("eTel").value.trim()||TEL,
+      email:$("eMail").value.trim()||EMAIL,
+      addr:$("eAddr").value.trim()||ADDR
+    };
+    MENU=newData.menu; SCHED=newData.horario; TEL=newData.tel; EMAIL=newData.email; ADDR=newData.addr;
     try{localStorage.setItem("bc_site_data",JSON.stringify(newData))}catch(e){}
     renderMenu(); renderHours(); renderContact(); updateAvailableHours();
 
